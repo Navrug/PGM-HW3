@@ -20,7 +20,7 @@ function [ p ] = compute_pzz( loga, logb, data, A, mu, sigma )
    logsum = logp(:,1,1);
    for i = 1:k
       for j = (1+(i==1)):k
-         logsum = logsum + log(1 + exp(logp(:,i,j) - logsum));
+         logsum = logaddexp(logsum, logp(:,i,j));
       end
    end
    p = exp(bsxfun(@minus,logp, logsum));

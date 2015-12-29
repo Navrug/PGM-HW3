@@ -18,7 +18,7 @@ for t=(length(data)-1):-1:1
    for i=1:k
       logb(t,i) = log(A(i,1))+logb(t+1,1);
       for j=2:k
-         logb(t,i) = logb(t,i) + log(1 + exp(A(i,j)+logb(t+1,j) - logb(t,i)));
+         logb(t,i) = logaddexp(logb(t,i), log(A(i,j))+logb(t+1,j));
       end
    end
    logp_yz = log(mvnpdf(data(t+1,:),mu,sigma)'); % = p(y|z)

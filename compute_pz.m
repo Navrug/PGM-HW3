@@ -4,7 +4,7 @@ function [ p ] = compute_pz( loga, logb )
    [~,k] = size(loga);
    logsum = loga(:,1) + logb(:,1);
    for j=2:k
-      logsum = logsum + log(1 + exp(loga(:,j) + logb(:,j) - logsum));
+      logsum = logaddexp(logsum, loga(:,j)+logb(:,j));
    end
    p = exp(bsxfun(@minus,loga + logb, logsum));
 end
