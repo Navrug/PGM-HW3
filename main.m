@@ -30,6 +30,19 @@ figure
 scatter(data(:,1), data(:,2), [], labels, 'x'); hold on;
 scatter(mu(:,1), mu(:,2), [], 'black', 'filled');  hold on;
 
+%%
+viter = viterbi( data, A, mu, sigma, pi0 );
+%mean(viterbi == labels') % = 71 percent
 
-viterbi = viterbi( data, A, mu, sigma, pi0 );
-mean(viterbi == labels') % = 71 percent
+% Plot the state probabilities.
+figure
+for i = 1:k
+   subplot(k, 1, i)
+   plot(1:100, p(1:100,i))
+end
+
+% Plot the geometrical positions with most probable state.
+% This is not the same thing as the most probable global state.
+figure
+scatter(data(:,1), data(:,2), [], viter', 'x'); hold on;
+scatter(mu(:,1), mu(:,2), [], 'black', 'filled');  hold on;
