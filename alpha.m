@@ -10,6 +10,9 @@ alphas = zeros(t,4);
 alphas(1,:) = pi .* p_cond;
 
 for s=2:t
+    for i=1:k
+        p_cond(i) = mvnpdf(data(s,:),mu(i,:),sigma(:,:,i));
+    end
     alphas(s,:) = (alphas(s-1,:)*A).*p_cond;
 end
 

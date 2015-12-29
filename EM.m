@@ -1,5 +1,5 @@
 function [ labels, pi, A, mu, sigma ] = EM( data, k, eps )
-%GM2 Summary of this function goes here
+%   Summary of this function goes here
 %   Detailed explanation goes here
 
    [labels, pi, mu, sigma] = GM2(data, k, eps);

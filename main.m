@@ -29,3 +29,7 @@ end
 figure
 scatter(data(:,1), data(:,2), [], labels, 'x'); hold on;
 scatter(mu(:,1), mu(:,2), [], 'black', 'filled');  hold on;
+
+
+viterbi = viterbi( data, A, mu, sigma, pi0 );
+mean(viterbi == labels') % = 71 percent

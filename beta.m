@@ -10,8 +10,11 @@ end
 betas = zeros(T, k);
 betas(T, :) = ones(1, k);
 
-for i=1:(T-t)
-    betas(T-i,:) = (betas(T-i+1,:)*A).*p_cond;
+for s=1:(T-t)
+    for i=1:k
+        p_cond(i) = mvnpdf(data(T-s,:),mu(i,:),sigma(:,:,i));
+    end
+    betas(T-s,:) = (betas(T-s+1,:)*A).*p_cond;
 end
 beta = betas(t,:);
 
