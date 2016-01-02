@@ -15,15 +15,13 @@ function [ logb ] = betas( data, A, mu, sigma )
 k = length(A);
 logb = zeros(length(data), k);
 for t=(length(data)-1):-1:1
+   logp_yz = log(mvnpdf(data(t+1,:),mu,sigma)'); % = p(y|z)
    for i=1:k
       % b(t,i) = A(i,1)*b(t+1,1)
-      logb(t,i) = log(A(i,1))+logb(t+1,1);
+      logb(t,i) = log(A(i,1))+logb(t+1,1)+logp_yz(1);
       for j=2:k
-         % b(t,i) = A(i,j)*b(t+1,j)
-         logb(t,i) = logaddexp(logb(t,i), log(A(i,j))+logb(t+1,j));
+         % b(t,i) = A(i,j)*b(t+1,j)*p_yz(j)
+         logb(t,i) = logaddexp(logb(t,i), log(A(i,j))+logb(t+1,j)+logp_yz(j));
       end
    end
-   logp_yz = log(mvnpdf(data(t+1,:),mu,sigma)'); % = p(y|z)
-   % b = p_yz * b
-   logb(t,:) = logp_yz + logb(t,:);
 end

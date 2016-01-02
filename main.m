@@ -11,10 +11,19 @@ t = 10;
 T = 500;
 
 eps = 1e-3;
-[ ~, ~, mu, sigma, ~ ] = GM2(data,4,eps);
+[ labels, ~, mu, sigma] = GM2(data,4,eps);
+
+% Plot the geometrical positions with most probable state.
+% This is not the same thing as the most probable global state.
+figure
+scatter(data(:,1), data(:,2), [], labels, 'x'); hold on;
+scatter(mu(:,1), mu(:,2), [], 'black', 'filled');  hold on;
 
 %%
-p = compute_p(alphas(data, A, mu, sigma, pi0), betas(data, A, mu, sigma));
+a = alphas(data, A, mu, sigma, pi0);
+b = betas(data, A, mu, sigma);
+pz = compute_pz(a, b);
+pzz = compute_pzz(a, b, data, A, mu, sigma);
 [~,labels] = max(p,[],2);
 
 % Plot the state probabilities.
@@ -26,6 +35,24 @@ end
 
 % Plot the geometrical positions with most probable state.
 % This is not the same thing as the most probable global state.
+figure
+scatter(data(:,1), data(:,2), [], labels, 'x'); hold on;
+scatter(mu(:,1), mu(:,2), [], 'black', 'filled');  hold on;
+
+%%
+k = 4;
+rng(0);
+eps = 1e-3;
+[ labels, pi, A, mu, sigma ] = EM( data, k, eps );
+
+% Plot the state probabilities.
+figure
+for i = 1:k
+   subplot(k, 1, i)
+   plot(1:100, p(1:100,i))
+end
+
+% Plot the geometrical positions.
 figure
 scatter(data(:,1), data(:,2), [], labels, 'x'); hold on;
 scatter(mu(:,1), mu(:,2), [], 'black', 'filled');  hold on;

@@ -2,7 +2,7 @@ function [ labels, pi, A, mu, sigma ] = EM( data, k, eps )
 %   Summary of this function goes here
 %   Detailed explanation goes here
 
-   [labels, pi, mu, sigma] = GM2(data, k, eps);
+   [~, pi, mu, sigma] = GM2(data, k, eps);
    A = ones(k,k)/6 + diag(ones(k,1))/3;
 
    [T,d] = size(data);
@@ -24,7 +24,7 @@ function [ labels, pi, A, mu, sigma ] = EM( data, k, eps )
          L = L + pz(t,:)*log(mvnpdf(data(t,:),mu,sigma));
          L = L + sum(sum(A.*reshape(pzz(t-1,:,:),k,k)));
       end
-     
+      fprintf('L = %f\n', L)
       if L - L_old < eps
          break
       end
@@ -42,9 +42,9 @@ function [ labels, pi, A, mu, sigma ] = EM( data, k, eps )
          end
          sigma(:,:,j) = sigma(:,:,j)/(sum(pz(:,j)));
       end
-      [~,labels] = max(pz,[],2);
    end
-   disp(it)
+   fprintf('EM performed %i iterations.\n', it)
+   [~,labels] = max(pz,[],2);
    
 end
 

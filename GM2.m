@@ -1,4 +1,4 @@
-function [ labels, pi, mu, sigma, likelihoods ] = GM2( data, k , eps )
+function [ labels, pi, mu, sigma ] = GM2( data, k , eps )
 %GM2 Summary of this function goes here
 %   Detailed explanation goes here
 
@@ -18,8 +18,6 @@ function [ labels, pi, mu, sigma, likelihoods ] = GM2( data, k , eps )
    while t < T
       t = t + 1;  
       
-      likelihoods(t) = cl(data, labels, mu, sigma);       
-
       % E step
       L_old = L;
       L = 0;
@@ -49,7 +47,6 @@ function [ labels, pi, mu, sigma, likelihoods ] = GM2( data, k , eps )
       end
       [~,labels] = max(tau,[],2);
    end
-   disp(t)
    
 end
 
