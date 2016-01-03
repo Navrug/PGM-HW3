@@ -17,7 +17,7 @@ for t=2:length(data)
    end
 end
 
-q = zeros(1, T);
+q = zeros(T, 1);
 [~, q(T)] = max(x(T,:));
 for t=T:-1:2
     q(t-1)=x(t,q(t));

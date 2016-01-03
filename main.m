@@ -6,6 +6,7 @@ T = 500;
 
 rng(0);
 [labels, ~, mu, sigma] = GM2(train, NaN, k, eps);
+
 % Plot the geometrical positions.
 figure
 scatter(train(:,1), train(:,2), [], labels, 'x'); hold on;
@@ -19,18 +20,18 @@ A = ones(4,4)/6 + diag(ones(4,1))/3;
 % Use parameters from HW2.
 eps = 1e-3;
 rng(0);
-[ ~, ~, mu, sigma] = GM2(train,4,eps);
+[ ~, ~, mu, sigma] = GM2(train, NaN, 4, eps);
 
 % Forward-backward algorithm.
-a = alphas(data, A, mu, sigma, pi);
-b = betas(data, A, mu, sigma);
+a = alphas(train, A, mu, sigma, pi);
+b = betas(train, A, mu, sigma);
 pz = compute_pz(a, b);
 
 % Plot the state probabilities.
 figure
 for i = 1:k
    subplot(k, 1, i)
-   plot(1:100, p(1:100,i))
+   plot(1:100, pz(1:100,i))
 end
 
 %% Question 4 : EM
@@ -56,11 +57,7 @@ fprintf('HMM has likelihoods %f and %f\n', l_train(length(l_train)), l_test(leng
 viter = viterbi(train, A, mu, sigma, pi);
 
 % Plot the state probabilities.
-figure
-for i = 1:k
-   subplot(k, 1, i)
-   plot(1:100, viter(1:100,i))
-end
+% --> it is not an output of the viterbi algo (only states)
 
 % Plot the geometrical positions with most probable state.
 % This is not the same thing as the most probable global state.
@@ -68,14 +65,26 @@ figure
 scatter(train(:,1), train(:,2), [], viter', 'x'); hold on;
 scatter(mu(:,1), mu(:,2), [], 'black', 'filled');  hold on;
 
-%% Question 9 and 10
-
-% Forward-backward algorithm.
-a = alphas(data, A, mu, sigma, pi);
-b = betas(data, A, mu, sigma);
-pz = compute_pz(a, b);
-
-
+% %% Question 9 
+% 
+% % % Forward-backward algorithm.
+% a = alphas(data, A, mu, sigma, pi);
+% b = betas(data, A, mu, sigma);
+% pz = compute_pz(a, b);
+% 
+% % Plot the state probabilities.
+% figure
+% for i = 1:k
+%    subplot(k, 1, i)
+%    plot(1:100, pz(1:100,i))
+% end
+% 
+% %% Question 10
+% 
+% % Plot the state probabilities.
+% 
+% [~, states] = max(pz, [], 2);
+% plot(1:100, states(1:100))
 
 
 %% Question 11
