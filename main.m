@@ -4,15 +4,6 @@ test = importdata('EMGaussian.test');
 k = 4;
 T = 500;
 
-rng(0);
-[labels, ~, mu, sigma] = GM2(train, NaN, k, eps);
-
-% Plot the geometrical positions.
-figure
-scatter(train(:,1), train(:,2), [], labels, 'x'); hold on;
-scatter(mu(:,1), mu(:,2), [], 'black', 'filled');  hold on;
-
-
 %% Question 2
 pi = 0.25 * ones(1, 4);
 A = ones(4,4)/6 + diag(ones(4,1))/3;
@@ -97,4 +88,15 @@ hold on;
 scatter(1:100, viter_test(1:100), '+'); hold off;
 
 
-%% TODO: legends
+%% Question 12
+
+max_k = 10;
+likelihoods = zeros(max_k);
+for k = 2:max_k
+    rng(0);
+    eps = 1e-3;
+    [labels, pi, A, mu, sigma, l_train, ~, ~, ~] = EM(train, NaN, k, eps);
+    likelihoods(k) = l_train(length(l_train));
+end
+figure
+plot(1:max_k, likelihoods)

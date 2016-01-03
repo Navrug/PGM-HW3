@@ -3,13 +3,15 @@ function [ labels, pi, A, mu, sigma, train_likelihoods, test_likelihoods, GM_tra
 %   Detailed explanation goes here
 
    [~, pi, mu, sigma, GM_train, GM_test] = GM2(train, test, k, eps);
-   A = ones(k,k)/6 + diag(ones(k,1))/3;
+   A = ones(k,k)/(2*k-2) + diag(ones(k,1))*(k-2)/(2*k-2);
 
    [T,d] = size(train);
    
    train_likelihoods = [];
    if ~isnan(test)
     test_likelihoods = [];
+   else
+    test_likelihoods = NaN;
    end
 
    L = -1e10;
@@ -54,7 +56,7 @@ function [ labels, pi, A, mu, sigma, train_likelihoods, test_likelihoods, GM_tra
       % M step
       A = reshape(sum(pzz, 1),k,k);
       A = diag(1 ./ sum(A,2))*A;
-      pi = mean(pz,1);
+      pi = pz(1,:);
       mu = zeros(k,d);
       for j = 1:k
          mu(j,:) =  + pz(:,j)'*train/sum(pz(:,j))  ; 

@@ -1,7 +1,7 @@
 function [ labels, pi, mu, sigma, L, L_test ] = GM2( data, test, k , eps )
 %GM2 Summary of this function goes here
 %   Detailed explanation goes here
-
+   L_test = NaN;
    [labels, mu] = k_means(data,k);
    
    [n,d] = size(data);

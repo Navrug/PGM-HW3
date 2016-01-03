@@ -12,7 +12,7 @@ logv(1,:) = log(pi) + log(mvnpdf(data(1,:),mu,sigma)');
 
 for t=2:length(data)
    for i=1:k
-       [logv(t,i), x(t,i)] = max( log(A(:,i)') + logv(t-1,:) );
+       [logv(t,i), x(t,i)] = max( logv(t-1,:) + log(A(:,i)') );
        logv(t,i) = logv(t,i) + log(mvnpdf(data(t,:),mu(i,:),sigma(:,:,i)));
    end
 end
