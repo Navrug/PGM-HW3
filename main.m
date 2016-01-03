@@ -65,36 +65,36 @@ figure
 scatter(train(:,1), train(:,2), [], viter', 'x'); hold on;
 scatter(mu(:,1), mu(:,2), [], 'black', 'filled');  hold on;
 
-% %% Question 9 
-% 
-% % % Forward-backward algorithm.
-% a = alphas(data, A, mu, sigma, pi);
-% b = betas(data, A, mu, sigma);
-% pz = compute_pz(a, b);
-% 
-% % Plot the state probabilities.
-% figure
-% for i = 1:k
-%    subplot(k, 1, i)
-%    plot(1:100, pz(1:100,i))
-% end
-% 
-% %% Question 10
-% 
-% % Plot the state probabilities.
-% 
-% [~, states] = max(pz, [], 2);
-% plot(1:100, states(1:100))
+%% Question 9 
 
-
-%% Question 11
-
-viter_test = viterbi(test, A, mu, sigma, pi);
+% % Forward-backward algorithm.
+a = alphas(test, A, mu, sigma, pi);
+b = betas(test, A, mu, sigma);
+pz = compute_pz(a, b);
 
 % Plot the state probabilities.
 figure
 for i = 1:k
    subplot(k, 1, i)
-   bar(double(viter_test(1:100)==i), 'r'); hold on;
-   plot(1:100, p(1:100,i)); hold on;
+   plot(1:100, pz(1:100,i))
 end
+hold off;
+
+%% Question 10
+
+% Plot the states
+[~, states] = max(pz, [], 2);
+figure
+scatter(1:100, states(1:100))
+
+%% Question 11
+
+viter_test = viterbi(test, A, mu, sigma, pi);
+
+% Plot the viterbi states along with most likely states according to the
+% marginal probability
+hold on;
+scatter(1:100, viter_test(1:100), '+'); hold off;
+
+
+%% TODO: legends
