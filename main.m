@@ -75,7 +75,12 @@ a = alphas(data, A, mu, sigma, pi);
 b = betas(data, A, mu, sigma);
 pz = compute_pz(a, b);
 
-viter_test = viterbi(train, A, mu, sigma, pi);
+
+
+
+%% Question 11
+
+viter_test = viterbi(test, A, mu, sigma, pi);
 
 % Plot the state probabilities.
 figure
