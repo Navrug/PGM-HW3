@@ -38,7 +38,7 @@ function [ labels, pi, mu, sigma, L, L_test ] = GM2( data, test, k , eps )
              for j = 1:k
                 test_tau(i,j) = pi(j)*mvnpdf(test(i,:), mu(j,:), sigma(:,:,j));
              end
-             L_test = L_test + log(sum(test_tau(i,labels(i))));
+             L_test = L_test + log(sum(test_tau(i,:)));
           end
       end
       fprintf('L = %f\n', L)
