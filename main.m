@@ -91,12 +91,16 @@ scatter(1:100, viter_test(1:100), '+'); hold off;
 %% Question 12
 
 max_k = 5;
-likelihoods = zeros(max_k);
+likelihoods = zeros(max_k-1);
+likelihoods_test = zeros(max_k-1);
 for k = 2:max_k
     rng(0);
     eps = 1e-3;
-    [labels, pi, A, mu, sigma, l_train, ~, ~, ~] = EM(train, NaN, k, eps);
-    likelihoods(k) = l_train(length(l_train));
+    [labels, pi, A, mu, sigma, l_train, l_test, ~, ~] = EM(train, test, k, eps);
+    likelihoods(k-1) = l_train(length(l_train));
+    likelihoods_test(k-1) = l_test(length(l_train));
 end
 figure
-plot(1:max_k, likelihoods)
+plot(2:max_k, likelihoods)
+figure
+plot(2:max_k, likelihoods_test)
