@@ -90,7 +90,7 @@ scatter(1:100, viter_test(1:100), '+'); hold off;
 
 %% Question 12
 
-max_k = 10;
+max_k = 5;
 likelihoods = zeros(max_k);
 for k = 2:max_k
     rng(0);
